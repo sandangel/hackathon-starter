@@ -8,9 +8,9 @@ This project is making use of GenAI heavily to:
 Here is the list of changes I added, all the code is reviewed and some are tested by myself. Due to the timeline restriction
 I was not able to test all the code and it might miss many things to start function properly. :(
 
-- `terraform/` to provision VPC and EKS cluster (tested with `terraform init` and `terraform plan`)
-- `.github/workflows/` to run CI/CD on PRs and merge, as well as manual trigger (not tested)
-- `k8s/` manifests to deploy the application to the k8s cluster (tested with `kubectl kustomize k8s/overlays/dev` )
+- `terraform/` to provision VPC and EKS cluster (tested with `terraform init` and `terraform plan`). See `terraform/README.md` for more details.
+- `.github/workflows/` to run CI/CD on PRs and merge, as well as manual trigger (not tested).
+- `k8s/` manifests to deploy the application to the k8s cluster (tested with `kubectl kustomize k8s/overlays/dev`). See `k8s/README.md` for more details.
 - `genai/` this is the code to help understand and interact with the code base (tested as below)
 - `setup.sh` and `deploy.sh` for setting up dependencies and deploy to local kind cluster, (not tested, I'm using NixOS unfortunately)
 -  `Dockerfile` (tested with `docker build`)
