@@ -58,4 +58,4 @@ I was not able to test all the code and it might miss many things to start funct
    rye run aicoder --model azure/gpt-4o # Or Anthropic models would give best result
    ```
 
-1. This AI coder will allow you to editing code and a lot more using GenAI. Please check [https://aider.chat/](https://aider.chat/) for more information.
+1. This AI coder will allow you to edit code and a lot more using GenAI. Please check [https://aider.chat/](https://aider.chat/) for more information.
