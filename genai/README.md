@@ -15,14 +15,23 @@ I was not able to test all the code and it might miss many things for it to star
 - `setup.sh` and `deploy.sh` for assignment, (not tested, I'm using NixOS unfortunately)
 -  `Dockerfile` (tested with `docker build`)
 - `controllers/`, `models/` and `app.js`, adding new blog post feature. (not tested)
+- `config.yaml` for environment variables. Ideally this should be added to k8s deployment as secrets/secret store.
+- `infrastructure-diagram.md` for the infrastructure diagram written in mermaid.
 
 
 ## Upload Project Code to GCS Bucket
 
-1. Ensure you have the Google Cloud SDK installed and authenticated.
+1. Ensure you have the Google Cloud SDK installed and authenticated. (This is not tested yet so please do not run)
+   ```bash
+   ./setup.sh
+   ```
+
 1. Authenticate with Google Cloud using the following command:
    ```bash
    gcloud auth login
+   gcloud auth application-default login
+   gcloud auth application-default set-quota-project <your-gcp-project>
+   gcloud config set project <your-gcp-project>
    ```
 
 1. Use the following command to upload your project code to a GCS bucket:
@@ -39,14 +48,14 @@ I was not able to test all the code and it might miss many things for it to star
 
 1. After the project is loaded, you can see the cache ID for the project, copy it and provide it as input for the below command to start interacting with the code base:
    ```bash
-   python genai/app.py <cached_content_id>
+   python genai/app.py <cached-content-id>
    ```
 
 ## Generate Code Using AI Coder
 
 1. To generate code using AI coder, you can use the following command:
    ```bash
-   rye run aicoder --model azure/gpt-4o
+   rye run aicoder --model azure/gpt-4o # Or Anthropic models would give best result
    ```
 
 1. This AI coder will allow you to editing code and a lot more using GenAI. Please check [https://aider.chat/](https://aider.chat/) for more information.
