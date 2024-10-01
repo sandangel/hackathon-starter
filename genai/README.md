@@ -6,7 +6,7 @@ This project is making use of GenAI heavily to:
 - Adding new code based on tasks in the requirements using AI coder tool installed as the python library.
 
 Here is the list of changes I added, all the code is reviewed and some are tested by myself. Due to the timeline restriction
-I was not able to test all the code and it might miss many things for it to start function properly.
+I was not able to test all the code and it might miss many things to start function properly. :(
 
 - `terraform/` to provision VPC and EKS cluster (tested with `terraform init` and `terraform plan`)
 - `.github/workflows/` to run CI/CD on PRs and merge, as well as manual trigger (not tested)
