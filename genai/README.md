@@ -12,7 +12,7 @@ I was not able to test all the code and it might miss many things to start funct
 - `.github/workflows/` to run CI/CD on PRs and merge, as well as manual trigger (not tested)
 - `k8s/` manifests to deploy the application to the k8s cluster (tested with `kubectl kustomize k8s/overlays/dev` )
 - `genai/` this is the code to help understand and interact with the code base (tested as below)
-- `setup.sh` and `deploy.sh` for assignment, (not tested, I'm using NixOS unfortunately)
+- `setup.sh` and `deploy.sh` for setting up dependencies and deploy to local kind cluster, (not tested, I'm using NixOS unfortunately)
 -  `Dockerfile` (tested with `docker build`)
 - `controllers/`, `models/` and `app.js`, adding new blog post feature. (not tested)
 - `config.yaml` for environment variables. Ideally this should be added to k8s deployment as secrets/secret store.
