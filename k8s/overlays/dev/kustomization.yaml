@@ -1,0 +1,11 @@
+---
+labels:
+  - pairs:
+      environment: dev
+      app: web
+    includeSelectors: true
+namespace: hackathon-starter-dev
+resources:
+  - ../../base
+
+nameSuffix: -dev
