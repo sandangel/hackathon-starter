@@ -14,3 +14,4 @@ spec:
         selector:
           matchLabels:
             app: web
+# TODO: Add HTTPS listener with certificate

@@ -19,6 +19,8 @@ For more details, refer to the [Gateway API documentation](https://gateway-api.s
 
 ### Configuration
 
+**Note:** The 443 listener for the Gateway is not configured yet and will be addressed in a future update.
+
 - **Gateway**: Defined in `gateway.yaml`, it specifies the entry point for traffic and the protocols supported.
 - **HTTPRoute**: Defined in `httproute.yaml`, it specifies the routing rules and backend services.
 
