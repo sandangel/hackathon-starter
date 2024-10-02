@@ -1,0 +1,10 @@
+extends ../layout
+
+block content
+  h2 #{post.title}
+  p By #{post.author.profile.name} on #{post.createdAt.toDateString()}
+  p #{post.content}
+  if user && user.id == post.author._id
+    a(href=`/blogs/${post._id}/edit`) Edit
+    form(method='POST', action=`/blogs/${post._id}?_method=DELETE`)
+      button(type='submit') Delete

@@ -1,0 +1,82 @@
+---
+name: Kustomize Apply
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'dev'
+        type: choice
+        options:
+          - dev
+          - stg
+          - prod
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Install Kubeval
+        run: |
+          curl -sLO https://github.com/instrumenta/kubeval/releases/latest/download/kubeval-linux-amd64.tar.gz
+          tar xf kubeval-linux-amd64.tar.gz
+          sudo mv kubeval /usr/local/bin
+
+      - name: Lint Kustomize
+        run: |
+          kubectl kustomize k8s/overlays/${{ inputs.environment || 'dev' }} | kubeval --strict
+
+  apply:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Diff Kustomize
+        if: github.event_name == 'pull_request'
+        id: diff
+        env:
+          KUBECONFIG: ${{ secrets.KUBECONFIG }}
+        run: |
+          kubectl diff -k k8s/overlays/${{ inputs.environment || 'dev' }} > diff.txt || true
+
+      - name: Comment on PR
+        if: github.event_name == 'pull_request'
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+            const fs = require('fs');
+            const diff = fs.readFileSync('diff.txt', 'utf8');
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: `<details>\n<summary>### Kustomize Diff</summary>\n\n\`\`\`diff\n${diff}\n\`\`\`\n</details>`
+            })
+
+      - name: Apply Kustomize
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        env:
+          # TODO: Use OIDC instead of KUBECONFIG secret
+          KUBECONFIG: ${{ secrets.KUBECONFIG }}
+        run: |
+          kubectl apply -k k8s/overlays/${{ inputs.environment || 'dev' }}
+          kubectl rollout status deployment/web-deployment

@@ -1,0 +1,91 @@
+[project]
+name = "hackathon-starter"
+version = "0.1.0"
+description = "ELSA challenge"
+authors = [
+    { name = "San Nguyen", email = "vinhsannguyen91@gmail.com" }
+]
+dependencies = [
+    "google-cloud-aiplatform>=1.68.0",
+    "loguru>=0.7.2",
+    "aider-chat>=0.58.1",
+    "boto3>=1.35.29",
+]
+readme = "README.md"
+requires-python = ">= 3.8"
+
+[tool.rye]
+managed = true
+dev-dependencies = [
+    "ruff>=0.6.8",
+    "pyright>=1.1.382.post1",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = ["genai"]
+
+[tool.ruff]
+line-length = 120
+output-format = "grouped"
+target-version = "py311"
+extend-exclude = ["chainlit"]
+
+[tool.ruff.lint]
+select = [
+  # isort
+  "I",
+  # bugbear rules
+  "B",
+  # Pyflakes
+  "F",
+  # pycodestyle
+  "E",
+  # unused arguments
+  "ARG",
+  # pyupgrade
+  "UP",
+  # flake8-simplify
+  "SIM",
+  # print statements
+  "T201",
+  "T203",
+  # misuse of typing.TYPE_CHECKING
+  "TCH004"
+]
+ignore = [
+  # mutable defaults
+  "B006",
+]
+unfixable = [
+  # disable auto fix for print statements
+  "T201",
+  "T203",
+]
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint.isort]
+length-sort = true
+length-sort-straight = true
+combine-as-imports = true
+extra-standard-library = ["typing_extensions"]
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+exclude = [
+  "**/.devenv",
+  "**/.venv",
+  "**/node_modules",
+  "**/.mypy_cache",
+  "**/.pytest_cache",
+]
+

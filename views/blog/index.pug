@@ -1,0 +1,11 @@
+extends ../layout
+
+block content
+  h2 Blog Posts
+  each post in posts
+    .post
+      h3
+        a(href=`/blogs/${post._id}`) #{post.title}
+      p By #{post.author.profile.name} on #{post.createdAt.toDateString()}
+      p #{post.content.substring(0, 100)}...
+      a(href=`/blogs/${post._id}`) Read more
